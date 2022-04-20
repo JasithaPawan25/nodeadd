@@ -20,7 +20,12 @@ app.use(express.urlencoded({extended:true}))
 
 
 const router=require('./routes/router.js')
+const routerHome=require('./routes/routerh.js')
+const routerSeller=require('./routes/routerseller.js')
 app.use('/api/users',router)
+app.use('/api/home',routerHome)
+app.use('/api/sellers',routerSeller)
+
 
 
 //static Images Folder

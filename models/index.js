@@ -27,6 +27,7 @@ db.sequelize=sequelize
 
 db.users =require( './UserModel.js')(sequelize, DataTypes)
 db.items =require( './ItemModel.js')(sequelize, DataTypes)
+db.sellers =require( './sellerModel.js')(sequelize, DataTypes)
 
 //{force:false}
 
@@ -37,15 +38,25 @@ db.sequelize.sync()
 
 // one to many relationship
 db.users.hasMany(db.items, {
-    foreignKey: 'user_id',
-    as: 'item'
+ //   foreignKey: 'user_id',
+    as: "items"
 })
 
 db.items.belongsTo(db.users, {
-    foreignKey: 'user_id',
-    as: 'user',
-     target_key:'user_id'
+    foreignKey: "userId",
+    as: "user",
+    // target_key:'user_id'
 })
+
+// one to one relatioship for user and seller
+
+// Foo.hasOne(Bar, {
+//     foreignKey: 'myFooId'
+//   });
+//   Bar.belongsTo(Foo);
+
+db.users.hasOne(db.sellers);
+db.sellers.belongsTo(db.users);
 
 
 

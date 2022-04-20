@@ -15,15 +15,26 @@ passport.use(
         secretOrKey:process.env.JWT_SECRET,
         },
         function(jwtPayload,done)
-        {
-            return User.findOne({ where: {id :jwtPayload.id }})
+        { 
+              return User.findOne({ where: {id :jwtPayload.id }})
             .then((users)=>
               { 
+               
+              
+               //      req.userId = jwtPayload.id
+                   
+                   // write your code here
+                
+                  //   req.userId = jwtPayload.id
+                //   res.status(200).send(userId)
+                 
                    return done(null,users);
               })
               .catch((err)=>{
                   return done(err);
               });
+
+            
 
         }
 

@@ -1,5 +1,6 @@
 const { Sequelize } = require(".");
 
+  
 
  module.exports=(sequelize, DataTypes) => {
 
@@ -47,13 +48,13 @@ const { Sequelize } = require(".");
             type: DataTypes.STRING,
             allowNull:false
         },
-        user_id: {
-            sequelize,
-            references: {
-                model: 'users',
-                key: 'id'
-            }
-        }
+        // user_id: {
+        //     type: Sequelize.INTEGER,
+        //     references: {
+        //         model: 'users',
+        //         key: 'id'
+        //     }
+        // }
 
     },{
        // timestamps:false,

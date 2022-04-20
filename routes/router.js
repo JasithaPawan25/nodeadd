@@ -13,16 +13,17 @@ const router =require('express').Router()
 
 router.post('/addusers',userController.addUser)
 
-
+// item per page
+//router.get('/:page',itemController.itemPerPage)
 
 // item routes
 
- router.post('/additems',passport.authenticate('jwt',{session:false}), itemController.upload, itemController.addItem)
+ router.post('/add',passport.authenticate('jwt',{session:false}), itemController.upload, itemController.addItem)
 
-router.get('/getallitems',passport.authenticate('jwt',{session:false}),itemController.getAllProducts)
-router.get('/:id',itemController.getSingleItem)
-router.put('/:id',itemController.updateItem)
-router.delete('/:id',itemController.deleteItem)
+router.get('/getall',passport.authenticate('jwt',{session:false}),itemController.getAllProducts)
+router.get('/:id', passport.authenticate('jwt',{session:false}), itemController.getSingleItem)
+router.put('/update/:id',passport.authenticate('jwt',{session:false}),itemController.updateProduct)
+router.delete('/:id',passport.authenticate('jwt',{session:false}),itemController.deleteItem)
 
 
 // login testing

@@ -1,5 +1,7 @@
 
 const db =require('../models')
+const pass = require('../auth/passport')
+const loginController =require("../controllers/loginController.js");
 
 // image Upload
 const multer = require('multer')
@@ -7,13 +9,26 @@ const multer = require('multer')
 const path = require('path');
 const jwt = require('jsonwebtoken')
 const passport = require("passport");
+const { items } = require('../models');
+
 
 
 const Item = db.items;
+const uss = db.users;
+
+const Users =loginController.Uerslogin;
+
+
+
+const UserrID = pass.sampleFunction;
+
 
 // add Item
 
 const addItem =  async (req,res)=>{
+
+   // const sds = req.userId
+
     let iteminfo ={
 
        ItemName:req.body.ItemName,
@@ -23,6 +38,9 @@ const addItem =  async (req,res)=>{
         ItemPrice:req.body.ItemPrice,	
         ItemCity:req.body.ItemCity,
         ItemTelephone:req.body.ItemTelephone,
+        userId:2,
+      //  userId:userIdd
+
 
 
         // name:req.body.name,
@@ -41,6 +59,38 @@ const getAllProducts = async (req,res) =>{
     res.status(200).send(items)
 }
 
+// items per page
+const itemPerPage = async (req,res) =>{
+    let limit =3;
+    let offset =0;
+
+    db.items.findAndCountAll()
+    .then((data)=>{
+        let page =req.params.page;
+        let pages = Math.ceil(data.count/limit);
+
+        offset =limit*(page-1);
+
+        db.items.findAll({
+            attributes:['id','ItemName','ItemDescription','ItemCatagory','ItemImage','ItemPrice','ItemCity','ItemTelephone','createdAt','updatedAt','userId'],
+            limit: limit,
+            offset: offset,
+            $sort: { id: 1 }
+        })
+        .then((users)=>{
+            res.status(200).json({'result': users, 'count': data.count, 'pages': pages});
+        });
+
+        // .catch(function (error) {
+        //     res.status(500).send('Internal Server Error');
+        // });
+
+    })
+
+
+
+}
+
 
 // get single Item using Item Id
 
@@ -52,11 +102,23 @@ const getSingleItem = async (req,res) =>{
 
 // Update the Item
 
-const updateItem =async (req,res) =>{
-    let id =req.params.id
-    const item =await Item.update(req.body, {where :{id :id}})
+// const updateItem =async (req,res) =>{
+//     let id =req.params.id
+//     const item =await Item.update(req.body, {where :{id :id}})
 
-    res.status(200).send(item)
+//     res.status(200).send(item,'Item Updated')
+
+// }
+
+
+const updateProduct = async (req, res) => {
+
+    let id = req.params.id
+
+    const product = await Item.update(req.body, { where: { id: id }})
+
+    res.status(200).send(product)
+   
 
 }
 
@@ -69,6 +131,7 @@ const deleteItem = async (req,res)=>{
 }
 
 
+//  connect one to many relation item and user
 
 
 
@@ -108,6 +171,8 @@ module.exports = {
     upload,
     getAllProducts,
     deleteItem,
-    updateItem,
+   // updateItem,
+    updateProduct,
     getSingleItem,
+    itemPerPage
 }

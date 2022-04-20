@@ -38,8 +38,9 @@ const Uerslogin=  async (req,res)=>{
         process.env.JWT_SECRET
     );
 
-    res.json({message:"Welcome Back, User", token:jwtToken})
+    res.json({message:"Welcome Back, User", token:jwtToken,id:userWithEmail.id})
 
+    req.userId =userWithEmail.id
 
     
 }
