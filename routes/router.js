@@ -11,7 +11,8 @@ const router =require('express').Router()
 
 
 
-router.post('/addusers',userController.addUser)
+//router.post('/addusers',userController.addUser)
+router.post('/signup',userController.register)
 
 // item per page
 //router.get('/:page',itemController.itemPerPage)
