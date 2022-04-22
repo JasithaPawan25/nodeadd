@@ -16,7 +16,7 @@ const { items } = require('../models');
 const Item = db.items;
 const uss = db.users;
 
-const Users =loginController.Uerslogin;
+//const Users =loginController.Uerslogin;
 
 
 
@@ -58,6 +58,20 @@ const getAllProducts = async (req,res) =>{
     let items = await Item.findAll({})
     res.status(200).send(items)
 }
+
+
+
+
+const getAllProductss = async (req,res) =>{
+    let items = await Item.findAll({
+        include:[{
+            model:uss,
+            as: 'user'
+        }]
+    })
+    res.status(200).send(items)
+}
+
 
 // items per page
 const itemPerPage = async (req,res) =>{
@@ -133,6 +147,26 @@ const deleteItem = async (req,res)=>{
 
 //  connect one to many relation item and user
 
+ const itemSeller = async (req,res)=>{
+    const id =req.params.id
+     const data =await Item.findOne({
+         include:[{
+             model:uss,
+             as: 'user'
+         }],
+         where : {id:id}
+
+
+        //  const data =await Item.findAll({
+        //     include:[{
+        //         model:uss,
+        //         as: 'user'
+        //     }],
+        //     where : {id:id}
+     })
+     res.status(200).send(data)
+ }
+
 
 
 
@@ -140,7 +174,7 @@ const deleteItem = async (req,res)=>{
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'Images')
+        cb(null, 'images')
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname))
@@ -170,8 +204,9 @@ module.exports = {
     addItem,
     upload,
     getAllProducts,
+    getAllProductss,
     deleteItem,
-   // updateItem,
+    itemSeller,
     updateProduct,
     getSingleItem,
     itemPerPage

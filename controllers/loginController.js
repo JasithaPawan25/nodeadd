@@ -1,6 +1,7 @@
 // const User = require('../models/UserModel');
 const Express = require('express')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt');
 
 const db =require('../models')
 
@@ -9,6 +10,8 @@ const User = db.users;
 
 const Uerslogin=  async (req,res)=>{
     const{ email,password} = req.body;
+
+   
 
     const userWithEmail =await User.findOne({where: { email } }).catch(
         (err)=> {
@@ -26,7 +29,11 @@ const Uerslogin=  async (req,res)=>{
         .json({message:"Email or Password does not match!"});
     }
 
-    if(userWithEmail.password != password)
+    const validPassword = await bcrypt.compare(password,userWithEmail.password);
+
+
+  //  if(userWithEmail.password != validPassword)
+  if (!validPassword)
     {
         return res
         .status(400)

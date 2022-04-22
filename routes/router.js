@@ -18,6 +18,8 @@ router.post('/signup',userController.register)
 //router.get('/:page',itemController.itemPerPage)
 
 // item routes
+router.get('/getalll',passport.authenticate('jwt',{session:false}), itemController.getAllProductss)
+router.get('/getitemseller/:id',passport.authenticate('jwt',{session:false}),itemController.itemSeller)
 
  router.post('/add',passport.authenticate('jwt',{session:false}), itemController.upload, itemController.addItem)
 
