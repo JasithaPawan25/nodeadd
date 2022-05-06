@@ -3,13 +3,17 @@ const Express = require('express')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 
-const db =require('../models')
+const db =require('../models');
+const { response } = require('express');
+const decode = require('jsonwebtoken/decode');
 
 const User = db.users;
 
 
+
+
 const Uerslogin=  async (req,res)=>{
-    const{ email,password} = req.body;
+    const{email,password} = req.body;
 
    
 
@@ -42,16 +46,34 @@ const Uerslogin=  async (req,res)=>{
 
     const jwtToken = jwt.sign(
         { id:userWithEmail.id , email: userWithEmail.email},
-        process.env.JWT_SECRET
+        process.env.JWT_SECRET,
+
     );
+
+    
+
+    // if(jwtToken)
+    // {
+    //     req.decodetoken =decode
+    // }
+
+   
 
     res.json({message:"Welcome Back, User", token:jwtToken,id:userWithEmail.id})
 
-    req.userId =userWithEmail.id
+
+    const iind =userWithEmail.id
+
+ 
+
+  
 
     
 }
 
+// export jwtToken =userWithEmail.id
+
 module.exports = {
     Uerslogin
+    
 }

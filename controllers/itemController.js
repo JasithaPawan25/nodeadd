@@ -9,25 +9,50 @@ const multer = require('multer')
 const path = require('path');
 const jwt = require('jsonwebtoken')
 const passport = require("passport");
-const { items } = require('../models');
+const { items, users } = require('../models');
+const { jwtToken } = require('../controllers/loginController.js');
+const { request } = require('express');
+const { response } = require('express');
+
+
 
 
 
 const Item = db.items;
 const uss = db.users;
 
+//const iddd = res.locals.jwtToken.userid;
+
 //const Users =loginController.Uerslogin;
+//  const fff =loginController.Uerslogin
+//  const zeed =fff.
 
 
-
-const UserrID = pass.sampleFunction;
+//const UserrID = pass.sampleFunction;
 
 
 // add Item
 
 const addItem =  async (req,res)=>{
 
-   // const sds = req.userId
+    //const sdsdsdsdp =response.locals;
+   // const {erfd} =req.jwtToken.id
+
+   const dead = req.headers.authorization.split(' ')[1];
+  // const deadio = deco
+
+ // const deddi ="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsImVtYWlsIjoienpAZ21haWwuY29tIiwiaWF0IjoxNjUxNDg4NTIyfQ.ScQB2t4QtUK3RB8_q_oiPyD9Xaj7t4Do0NR0nEcaIno"
+
+   const decodedJwt = jwt.decode(dead);
+
+   // const iid=req.decodedJwt.id;
+
+    console.log('id :',dead)
+    console.log('info :',decodedJwt)
+    console.log('infos :',decodedJwt.id)
+    
+  //  console.log('id :',iid)
+
 
     let iteminfo ={
 
@@ -38,8 +63,7 @@ const addItem =  async (req,res)=>{
         ItemPrice:req.body.ItemPrice,	
         ItemCity:req.body.ItemCity,
         ItemTelephone:req.body.ItemTelephone,
-        userId:2,
-      //  userId:userIdd
+        userId:decodedJwt.id
 
 
 

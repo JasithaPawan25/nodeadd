@@ -38,15 +38,15 @@ db.sequelize.sync()
 
 // one to many relationship
 db.users.hasMany(db.items, {
- //   foreignKey: 'user_id',
-    as: "items"
-})
-
-db.items.belongsTo(db.users, {
-    foreignKey: "userId",
-    as: "user",
-    // target_key:'user_id'
-})
+    //   foreignKey: 'user_id',
+       as: "items"
+   })
+   
+   db.items.belongsTo(db.users, {
+       foreignKey: "userId",
+       as: "user",
+       // target_key:'user_id'
+   })
 
 // one to one relatioship for user and seller
 

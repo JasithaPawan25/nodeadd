@@ -48,16 +48,26 @@ const { Sequelize } = require(".");
             type: DataTypes.STRING,
             allowNull:false
         },
-        // user_id: {
-        //     type: Sequelize.INTEGER,
+        // userId: {
+        //     type: DataTypes.INTEGER,
         //     references: {
-        //         model: 'users',
+        //        model: 'user', 
+        //        key: 'id',
+        //     }
+        // }
+
+       
+
+        // userId: {
+        //     type: DataTypes.INTEGER,
+        //     references: {
+        //         model: 'user',
         //         key: 'id'
         //     }
         // }
 
     },{
-       // timestamps:false,
+        timestamps:false,
        // updatedAt:false,
       //  createdAt:false
     })
